@@ -1,0 +1,35 @@
+name: Update LeetCode Progress
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install pandas
+
+      - name: Update Progress in README
+        run: python update_readme.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "Updated LeetCode Progress Tracker"
+          git push
