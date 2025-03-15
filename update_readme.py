@@ -27,32 +27,37 @@ readme_path = "README.md"
 with open(readme_path, "r", encoding="utf-8") as f:
     readme_content = f.read()
 
-# Use regex to update the Progress Tracker table
+# Function to replace each category dynamically
+def replace_category(match, category):
+    return match.group(1) + str(categories[category]).rjust(2)  # Ensures formatting consistency
+
+# Use regex to update progress tracker table
 updated_readme = re.sub(
-    r"(\| \*\*Easy\*\* +\| )\d+",
-    r"\1" + str(categories['Easy']),
+    r"(\|\s*\*\*Easy\*\*\s*\|\s*)\d+",
+    lambda m: replace_category(m, "Easy"),
     readme_content
 )
 
 updated_readme = re.sub(
-    r"(\| \*\*Medium\*\* +\| )\d+",
-    r"\1" + str(categories['Medium']),
+    r"(\|\s*\*\*Medium\*\*\s*\|\s*)\d+",
+    lambda m: replace_category(m, "Medium"),
     updated_readme
 )
 
 updated_readme = re.sub(
-    r"(\| \*\*Hard\*\* +\| )\d+",
-    r"\1" + str(categories['Hard']),
+    r"(\|\s*\*\*Hard\*\*\s*\|\s*)\d+",
+    lambda m: replace_category(m, "Hard"),
     updated_readme
 )
 
 updated_readme = re.sub(
-    r"(\| \*\*Total\*\* +\| )\d+",
-    r"\1" + str(categories['Total']),
+    r"(\|\s*\*\*Total\*\*\s*\|\s*)\d+",
+    lambda m: m.group(1) + str(total_solved).rjust(2),
     updated_readme
 )
+
 # Write the updated content back to README
 with open(readme_path, "w", encoding="utf-8") as f:
     f.write(updated_readme)
 
-print("README updated successfully!")
+print("✅ README updated successfully!")
