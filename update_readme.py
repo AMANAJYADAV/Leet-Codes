@@ -30,29 +30,27 @@ with open(readme_path, "r", encoding="utf-8") as f:
 # Use regex to update the Progress Tracker table
 updated_readme = re.sub(
     r"(\| \*\*Easy\*\* +\| )\d+",
-    rf"\1{categories['Easy']}",
+    r"\1" + str(categories['Easy']),
     readme_content
 )
 
 updated_readme = re.sub(
     r"(\| \*\*Medium\*\* +\| )\d+",
-    rf"\1{categories['Medium']}",
+    r"\1" + str(categories['Medium']),
     updated_readme
 )
 
 updated_readme = re.sub(
     r"(\| \*\*Hard\*\* +\| )\d+",
-    rf"\1{categories['Hard']}",
+    r"\1" + str(categories['Hard']),
     updated_readme
 )
 
 updated_readme = re.sub(
     r"(\| \*\*Total\*\* +\| )\d+",
-    rf"\1{categories['Total']}",
+    r"\1" + str(categories['Total']),
     updated_readme
-
 )
-
 # Write the updated content back to README
 with open(readme_path, "w", encoding="utf-8") as f:
     f.write(updated_readme)
